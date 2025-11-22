@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ToDolist_Hany.Models.TodoItem>
+
+@{
+    ViewData["Title"] = "To-Do List";
+    var items = Model?.ToList() ?? new List<ToDolist_Hany.Models.TodoItem>(); // local copy
+    var doneCount = items.Count(i => i.IsDone);
+    var total = items.Count;
+}
+
+<h1 class="mb-3">
+    @ViewData["Title"]
+    <span class="badge bg-secondary">@total total</span>
+    <span class="badge bg-success">@doneCount done</span>
+</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">+ Add New</a>
+</p>
+
+@if (!items.Any())
+{
+    <div class="alert alert-info">No items yet. Click <strong>+ Add New</strong> to create one.</div>
+}
+else
+{
+    <table class="table table-striped align-middle">
+        <thead class="table-light">
+            <tr>
+                <th style="width:140px;">Done</th>
+                <th>Title</th>
+                <th style="width:80px;">Id</th>
+                <th style="width:120px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in items)
+            {
+                <tr>
+                    <td>
+                        <form asp-action="Toggle" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-sm @(item.IsDone ? "btn-warning" : "btn-success")">
+                                @(item.IsDone ? "Undo" : "Done")
+                            </button>
+                        </form>
+                    </td>
+                    <td class="@(item.IsDone ? "text-decoration-line-through text-muted" : null)">
+                        @item.Title
+                    </td>
+                    <td>@item.Id</td>
+                    <td>
+                        <form asp-action="Delete" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,22 @@
+/* === ToDo page tweaks === */
+
+/* Strike-through + muted color for completed items */
+.todo-done {
+    text-decoration: line-through;
+    color: #6c757d; /* Bootstrap's muted-ish gray */
+}
+
+/* Make buttons and text align nicely in table rows */
+.table td, .table th {
+    vertical-align: middle;
+}
+
+/* Keep small buttons from wrapping inside table cells */
+.btn-sm {
+    white-space: nowrap;
+}
+
+/* Optional: a bit nicer navbar brand weight (purely cosmetic) */
+.navbar-brand {
+    font-weight: 600;
+}
